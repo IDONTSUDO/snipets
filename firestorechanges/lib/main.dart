@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:web_firestore/screens/auth_screen.dart';
-import 'package:web_firestore/screens/chat_screen.dart';
-import 'package:web_firestore/screens/splash_screen.dart';
+import 'example.provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,20 +30,10 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: appSnapshot.connectionState != ConnectionState.done
-                ? SplashScreen()
-                : StreamBuilder(
-                    stream: FirebaseAuth.instance.authStateChanges(),
-                    builder: (ctx, userSnapshot) {
-                      if (userSnapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return SplashScreen();
-                      }
-                      if (userSnapshot.hasData) {
-                        return ChatScreen();
-                      }
-                      return AuthScreen();
-                    }),
+            home: StreamBuilder(stream: orderService.getOrder, builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) { 
+                print(snapshot);
+                return Text('132231');
+             },)
           );
         });
   }
